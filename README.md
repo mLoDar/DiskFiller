@@ -19,9 +19,9 @@ Only use it on your own systems or with explicit permission of a devices owner.
 
 <br>
 
-## How it works:
+## How the application works:
 
-- The application checks if there are at least 4GB of free space.
+- It checks if there are at least 4GB of free space.
 
 - After that the application copies itself to `%appdata%`. Once copied there, the current process will be closed and the file will be deleted.
 
@@ -67,3 +67,25 @@ That might be because the application has sort of a malicious behaviour:
 - The application has no window (size 0x0)
 - The application itself is not visible in the taskbar
 - The application writes much data to multiple files
+
+---
+
+<br>
+
+## Installation:
+
+- Download the latest [release](https://github.com/mLoDar/DiskFiller/releases/).
+
+- The `DiskFiller.exe` can be used directly.
+
+### OR
+
+- Download the latest [source code](https://github.com/mLoDar/DiskFiller/releases/).
+
+- For compiling the executable, you need to install [Visual Studio](https://visualstudio.microsoft.com/downloads/).
+
+> I am not sure if Visual Studio Code works, so just use the "normal" one
+
+- Make sure that you install the `.NET desktop development`.
+
+- Open the project from the downloaded `source code` with the `DiskFiller.sln` file.
