@@ -84,8 +84,6 @@ That might be because the application has sort of a malicious behaviour:
 
 - For compiling the executable, you need to install [Visual Studio](https://visualstudio.microsoft.com/downloads/).
 
-> I am not sure if Visual Studio Code works, so just use the "normal" one
-
 - Make sure that you install the `.NET desktop development`.
 
 - Open the project from the downloaded `source code` with the `DiskFiller.sln` file.
