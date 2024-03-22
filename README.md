@@ -7,12 +7,12 @@
 ---
 
 > :warning: **Disclaimer** :warning:
-
+>
 > This application was created for educational and learning purpose and is not intended to be abused in any form.
-
+>
 > I am not responsible for any damage or system failure caused by this application.
-Only use it on your own systems or with explicit permission of a devices owner.
-
+> Only use it on your own systems or with explicit permission of a devices owner.
+>
 > The application hides itself from the taskbar and has no window. It is closable by the Task Manager.
 
 ---
