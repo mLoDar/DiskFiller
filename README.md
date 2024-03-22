@@ -74,7 +74,7 @@ That might be because the application has sort of a malicious behaviour:
 
 ## Installation:
 
-- Download the latest [release](https://github.com/mLoDar/DiskFiller/releases/).
+- Download the latest [release](/releases/).
 
 - The `DiskFiller.exe` can be used directly.
 
