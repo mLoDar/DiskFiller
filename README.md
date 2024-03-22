@@ -13,7 +13,7 @@
 > I am not responsible for any damage or system failure caused by this application.
 Only use it on your own systems or with explicit permission of a devices owner.
 
-> The application hides itself from the taskbar and has no windows. It is closable by the Task Manager.
+> The application hides itself from the taskbar and has no window. It is closable by the Task Manager.
 
 ---
 
