@@ -23,7 +23,7 @@ namespace DiskFiller
 
         private readonly string applicationName = string.Empty;
         private readonly ApplicationPaths finalPaths;
-        private readonly string fileContent;
+
 
 
         internal DiskFiller()
