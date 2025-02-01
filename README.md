@@ -9,7 +9,7 @@
 > :warning: **Disclaimer** :warning:
 >
 > This application was created for educational and learning purpose and is not intended to be abused in any form.
-> The origin of this application was to pull a prank on a friend of mine.
+> The original idea of this application was to pull a prank on a friend of mine.
 > 
 > I am not responsible for any damage or system failure caused by this application.
 > Only use it on your own systems or with explicit permission of a devices owner.
